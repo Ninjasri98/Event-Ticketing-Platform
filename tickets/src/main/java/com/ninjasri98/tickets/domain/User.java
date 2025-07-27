@@ -18,7 +18,6 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -29,7 +28,6 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 public class User {
 
     @Id
@@ -43,7 +41,6 @@ public class User {
     private String email;
 
     @OneToMany(mappedBy = "organizer", cascade = CascadeType.ALL)
-    @Builder.Default
     private List<Event> organizedEvents = new ArrayList<>();
 
     @ManyToMany
@@ -52,7 +49,6 @@ public class User {
         joinColumns = @JoinColumn(name = "user_id"),
         inverseJoinColumns = @JoinColumn(name = "event_id")
     )
-    @Builder.Default
     private List<Event> attendingEvents = new ArrayList<>();
 
     @Override
@@ -110,7 +106,6 @@ public class User {
         joinColumns = @JoinColumn(name = "user_id"),
         inverseJoinColumns = @JoinColumn(name = "event_id")
     )
-    @Builder.Default
     private List<Event> staffingEvents = new ArrayList<>();
 
     @CreatedDate
