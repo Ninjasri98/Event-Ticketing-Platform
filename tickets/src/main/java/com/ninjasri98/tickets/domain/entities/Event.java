@@ -1,4 +1,4 @@
-package com.ninjasri98.tickets.domain;
+package com.ninjasri98.tickets.domain.entities;
 
 import java.time.LocalDateTime;
 import java.util.List;
