@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.ninjasri98.tickets.domain.dtos.ErrorDto;
+import com.ninjasri98.tickets.exceptions.EventNotFoundException;
+import com.ninjasri98.tickets.exceptions.EventUpdateException;
+import com.ninjasri98.tickets.exceptions.TicketTypeNotFoundException;
 import com.ninjasri98.tickets.exceptions.UserNotFoundException;
 
 import jakarta.validation.ConstraintViolationException;
@@ -42,7 +45,6 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errorDto, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErrorDto> handleMethodArgumentNotValidException(
             MethodArgumentNotValidException ex) {
@@ -63,6 +65,31 @@ public class GlobalExceptionHandler {
         log.error("Caught UserNotFoundException", ex);
         ErrorDto errorDto = new ErrorDto();
         errorDto.setError("User not found");
+        return new ResponseEntity<>(errorDto, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(EventUpdateException.class)
+    public ResponseEntity<ErrorDto> handleEventUpdateException(EventUpdateException ex) {
+        log.error("Caught EventUpdateException", ex);
+        ErrorDto errorDto = new ErrorDto();
+        errorDto.setError("Unable to update event");
+        return new ResponseEntity<>(errorDto, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(TicketTypeNotFoundException.class)
+    public ResponseEntity<ErrorDto> handleTicketTypeNotFoundException(TicketTypeNotFoundException ex) {
+        log.error("Caught TicketTypeNotFoundException", ex);
+        ErrorDto errorDto = new ErrorDto();
+        errorDto.setError("Ticket type not found");
+        return new ResponseEntity<>(errorDto, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(EventNotFoundException.class)
+
+    public ResponseEntity<ErrorDto> handleEventNotFoundException(EventNotFoundException ex) {
+        log.error("Caught EventNotFoundException", ex);
+        ErrorDto errorDto = new ErrorDto();
+        errorDto.setError("Event not found");
         return new ResponseEntity<>(errorDto, HttpStatus.BAD_REQUEST);
     }
 }
