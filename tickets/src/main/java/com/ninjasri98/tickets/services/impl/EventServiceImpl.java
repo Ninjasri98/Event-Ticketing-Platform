@@ -3,6 +3,8 @@ package com.ninjasri98.tickets.services.impl;
 import java.util.List;
 import java.util.UUID;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.ninjasri98.tickets.domain.CreateEventRequest;
@@ -51,5 +53,11 @@ public class EventServiceImpl implements EventService {
         eventToCreate.setOrganizer(organizer);
         eventToCreate.setTicketTypes(ticketTypesToCreate);
         return eventRepository.save(eventToCreate);
+    }
+
+    @Override
+    public Page<Event> listEventsForOrganizer(UUID organizerId, Pageable pageable) {
+        
+        return eventRepository.findByOrganizerId(organizerId, pageable);
     }
 }
