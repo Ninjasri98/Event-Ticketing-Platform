@@ -14,7 +14,9 @@ import com.ninjasri98.tickets.domain.dtos.ErrorDto;
 import com.ninjasri98.tickets.exceptions.EventNotFoundException;
 import com.ninjasri98.tickets.exceptions.EventUpdateException;
 import com.ninjasri98.tickets.exceptions.QrCodeGenerationException;
+import com.ninjasri98.tickets.exceptions.QrCodeNotFoundException;
 import com.ninjasri98.tickets.exceptions.TicketTypeNotFoundException;
+import com.ninjasri98.tickets.exceptions.TicketsSoldOutException;
 import com.ninjasri98.tickets.exceptions.UserNotFoundException;
 
 import jakarta.validation.ConstraintViolationException;
@@ -86,7 +88,6 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(EventNotFoundException.class)
-
     public ResponseEntity<ErrorDto> handleEventNotFoundException(EventNotFoundException ex) {
         log.error("Caught EventNotFoundException", ex);
         ErrorDto errorDto = new ErrorDto();
@@ -100,5 +101,21 @@ public class GlobalExceptionHandler {
         ErrorDto errorDto = new ErrorDto();
         errorDto.setError("Unable to generate QR Code");
         return new ResponseEntity<>(errorDto, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(QrCodeNotFoundException.class)
+    public ResponseEntity<ErrorDto> handleQrCodeNotFoundException(QrCodeNotFoundException ex) {
+        log.error("Caught QrCodeNotFoundException", ex);
+        ErrorDto errorDto = new ErrorDto();
+        errorDto.setError("Qr Code not found");
+        return new ResponseEntity<>(errorDto, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(TicketsSoldOutException.class)
+    public ResponseEntity<ErrorDto> handleTicketsSoldOutException(TicketsSoldOutException ex) {
+        log.error("Caught TicketsSoldOutException", ex);
+        ErrorDto errorDto = new ErrorDto();
+        errorDto.setError("Tickets are sold out");
+        return new ResponseEntity<>(errorDto, HttpStatus.BAD_REQUEST);
     }
 }
