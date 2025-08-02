@@ -5,6 +5,8 @@ import org.mapstruct.ReportingPolicy;
 
 import com.ninjasri98.tickets.domain.CreateEventRequest;
 import com.ninjasri98.tickets.domain.CreateTicketTypeRequest;
+import com.ninjasri98.tickets.domain.UpdateEventRequest;
+import com.ninjasri98.tickets.domain.UpdateTicketTypeRequest;
 import com.ninjasri98.tickets.domain.dtos.CreateEventRequestDto;
 import com.ninjasri98.tickets.domain.dtos.CreateEventResponseDto;
 import com.ninjasri98.tickets.domain.dtos.CreateTicketTypeRequestDto;
@@ -12,6 +14,10 @@ import com.ninjasri98.tickets.domain.dtos.GetEventDetailsResponseDto;
 import com.ninjasri98.tickets.domain.dtos.GetEventDetailsTicketTypesResponseDto;
 import com.ninjasri98.tickets.domain.dtos.ListEventResponseDto;
 import com.ninjasri98.tickets.domain.dtos.ListEventTicketTypeResponseDto;
+import com.ninjasri98.tickets.domain.dtos.UpdateEventRequestDto;
+import com.ninjasri98.tickets.domain.dtos.UpdateEventResponseDto;
+import com.ninjasri98.tickets.domain.dtos.UpdateTicketTypeRequestDto;
+import com.ninjasri98.tickets.domain.dtos.UpdateTicketTypeResponseDto;
 import com.ninjasri98.tickets.domain.entities.Event;
 import com.ninjasri98.tickets.domain.entities.TicketType;
 
@@ -30,4 +36,12 @@ public interface EventMapper {
   GetEventDetailsTicketTypesResponseDto toGetEventDetailsTicketTypesResponseDto(TicketType ticketType);
 
   GetEventDetailsResponseDto toGetEventDetailsResponseDto(Event event);
+
+  UpdateTicketTypeRequest fromDto(UpdateTicketTypeRequestDto dto);
+
+  UpdateEventRequest fromDto(UpdateEventRequestDto dto);
+
+  UpdateTicketTypeResponseDto toUpdateTicketTypeResponseDto(TicketType ticketType);
+
+  UpdateEventResponseDto toUpdateEventResponseDto(Event event);
 }
