@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import com.ninjasri98.tickets.domain.dtos.ErrorDto;
 import com.ninjasri98.tickets.exceptions.EventNotFoundException;
 import com.ninjasri98.tickets.exceptions.EventUpdateException;
+import com.ninjasri98.tickets.exceptions.QrCodeGenerationException;
 import com.ninjasri98.tickets.exceptions.TicketTypeNotFoundException;
 import com.ninjasri98.tickets.exceptions.UserNotFoundException;
 
@@ -91,5 +92,13 @@ public class GlobalExceptionHandler {
         ErrorDto errorDto = new ErrorDto();
         errorDto.setError("Event not found");
         return new ResponseEntity<>(errorDto, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(QrCodeGenerationException.class)
+    public ResponseEntity<ErrorDto> handleQrCodeGenerationException(QrCodeGenerationException ex) {
+        log.error("Caught QrCodeGenerationException", ex);
+        ErrorDto errorDto = new ErrorDto();
+        errorDto.setError("Unable to generate QR Code");
+        return new ResponseEntity<>(errorDto, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
