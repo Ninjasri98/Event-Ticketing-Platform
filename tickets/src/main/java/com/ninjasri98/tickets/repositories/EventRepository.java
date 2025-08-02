@@ -29,4 +29,6 @@ public interface EventRepository extends JpaRepository<Event, UUID> {
                     "to_tsvector('english', COALESCE(name, '') || ' ' || COALESCE(venue, '')) " +
                     "@@ plainto_tsquery('english', :searchTerm)", nativeQuery = true)
     Page<Event> searchEvents(@Param("searchTerm") String searchTerm, Pageable pageable);
+
+    Optional<Event> findByIdAndStatus(UUID id, EventStatusEnum status);
 }
