@@ -17,6 +17,7 @@ import com.ninjasri98.tickets.domain.CreateEventRequest;
 import com.ninjasri98.tickets.domain.UpdateEventRequest;
 import com.ninjasri98.tickets.domain.UpdateTicketTypeRequest;
 import com.ninjasri98.tickets.domain.entities.Event;
+import com.ninjasri98.tickets.domain.entities.EventStatusEnum;
 import com.ninjasri98.tickets.domain.entities.TicketType;
 import com.ninjasri98.tickets.domain.entities.User;
 import com.ninjasri98.tickets.exceptions.EventNotFoundException;
@@ -146,6 +147,11 @@ public class EventServiceImpl implements EventService {
     @Transactional
     public void deleteEventForOrganizer(UUID organizerId, UUID id) {
         getEventForOrganizer(organizerId, id).ifPresent(eventRepository::delete);
+    }
+
+    @Override
+    public Page<Event> listPublishedEvents(Pageable pageable) {
+        return eventRepository.findByStatus(EventStatusEnum.PUBLISHED, pageable);
     }
 
 }

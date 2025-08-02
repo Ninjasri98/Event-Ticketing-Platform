@@ -14,6 +14,7 @@ import com.ninjasri98.tickets.domain.dtos.GetEventDetailsResponseDto;
 import com.ninjasri98.tickets.domain.dtos.GetEventDetailsTicketTypesResponseDto;
 import com.ninjasri98.tickets.domain.dtos.ListEventResponseDto;
 import com.ninjasri98.tickets.domain.dtos.ListEventTicketTypeResponseDto;
+import com.ninjasri98.tickets.domain.dtos.ListPublishedEventResponseDto;
 import com.ninjasri98.tickets.domain.dtos.UpdateEventRequestDto;
 import com.ninjasri98.tickets.domain.dtos.UpdateEventResponseDto;
 import com.ninjasri98.tickets.domain.dtos.UpdateTicketTypeRequestDto;
@@ -44,4 +45,6 @@ public interface EventMapper {
   UpdateTicketTypeResponseDto toUpdateTicketTypeResponseDto(TicketType ticketType);
 
   UpdateEventResponseDto toUpdateEventResponseDto(Event event);
+
+  ListPublishedEventResponseDto toListPublishedEventResponseDto(Event event);
 }
