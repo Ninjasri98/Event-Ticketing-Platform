@@ -3,7 +3,6 @@ package com.ninjasri98.tickets.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.oauth2.server.resource.web.authentication.BearerTokenAuthenticationFilter;
@@ -16,22 +15,21 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(
-        HttpSecurity http, 
-        UserProvisioningFilter userProvisioningFilter) throws Exception {
-        http.authorizeHttpRequests(authorize ->
-        authorize
-         .requestMatchers(HttpMethod.GET, "/api/v1/published-events/**").permitAll()
-        .anyRequest().authenticated()
-        ).
-        csrf(csrf -> csrf.disable())
-        .sessionManagement(session -> session
-        .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-        .oauth2ResourceServer(oauth2 ->
-        oauth2.jwt(
-            Customizer.withDefaults()
-        ))
-        .addFilterAfter(userProvisioningFilter,BearerTokenAuthenticationFilter.class);
-
+            HttpSecurity http,
+            UserProvisioningFilter userProvisioningFilter,
+            JwtAuthenticationConverter jwtAuthenticationConverter) throws Exception {
+        http
+                .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers(HttpMethod.GET, "/api/v1/published-events/**").permitAll()
+                        // Catch all rule
+                        .anyRequest().authenticated())
+                .csrf(csrf -> csrf.disable())
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .oauth2ResourceServer(
+                        oauth2 -> oauth2.jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthenticationConverter) // Add
+                                                                                                               // this
+                        ))
+                .addFilterAfter(userProvisioningFilter, BearerTokenAuthenticationFilter.class);
         return http.build();
     }
 
