@@ -1,5 +1,6 @@
 package com.ninjasri98.tickets.repositories;
 
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.data.domain.Page;
@@ -14,4 +15,6 @@ public interface TicketRepository extends JpaRepository<Ticket, UUID> {
    int countByTicketTypeId(UUID ticketTypeId);
 
    Page<Ticket> findByPurchaserId(UUID purchaserId, Pageable pageable);
+
+   Optional<Ticket> findByIdAndPurchaserId(UUID id, UUID purchaserId);
 }

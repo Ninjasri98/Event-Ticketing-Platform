@@ -1,5 +1,6 @@
 package com.ninjasri98.tickets.services.impl;
 
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.data.domain.Page;
@@ -20,5 +21,10 @@ public class TicketServiceImpl implements TicketService {
     @Override
     public Page<Ticket> listTicketsForUser(UUID userId, Pageable pageable) {
         return ticketRepository.findByPurchaserId(userId, pageable);
+    }
+
+    @Override
+    public Optional<Ticket> getTicketForUser(UUID userId, UUID ticketId) {
+        return ticketRepository.findByIdAndPurchaserId(ticketId, userId);
     }
 }
