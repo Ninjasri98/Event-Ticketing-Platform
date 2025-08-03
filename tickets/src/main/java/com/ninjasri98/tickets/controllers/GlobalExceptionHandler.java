@@ -15,6 +15,7 @@ import com.ninjasri98.tickets.exceptions.EventNotFoundException;
 import com.ninjasri98.tickets.exceptions.EventUpdateException;
 import com.ninjasri98.tickets.exceptions.QrCodeGenerationException;
 import com.ninjasri98.tickets.exceptions.QrCodeNotFoundException;
+import com.ninjasri98.tickets.exceptions.TicketNotFoundException;
 import com.ninjasri98.tickets.exceptions.TicketTypeNotFoundException;
 import com.ninjasri98.tickets.exceptions.TicketsSoldOutException;
 import com.ninjasri98.tickets.exceptions.UserNotFoundException;
@@ -116,6 +117,14 @@ public class GlobalExceptionHandler {
         log.error("Caught TicketsSoldOutException", ex);
         ErrorDto errorDto = new ErrorDto();
         errorDto.setError("Tickets are sold out");
+        return new ResponseEntity<>(errorDto, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(TicketNotFoundException.class)
+    public ResponseEntity<ErrorDto> handleTicketNotFoundException(TicketNotFoundException ex) {
+        log.error("Caught TicketNotFoundException", ex);
+        ErrorDto errorDto = new ErrorDto();
+        errorDto.setError("Ticket not found");
         return new ResponseEntity<>(errorDto, HttpStatus.BAD_REQUEST);
     }
 }
