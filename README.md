@@ -97,7 +97,7 @@ A full-stack event management system designed to handle the **entire event lifec
 
 ### 1. Clone the repository
 ```bash
-git clone https://github.com/yourusername/event-ticketing-platform.git
+git clone https://github.com/yourusername/event-ticketing-platform.git](https://github.com/Ninjasri98/Event-Ticketing-Platform
 cd event-ticketing-platform
 ```
 
